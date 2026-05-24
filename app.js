@@ -416,6 +416,7 @@ const TOPICS = [
 let currentTopic = null;
 let currentSection = 'terms';
 let currentExamType = 'tf';
+let termsSort = 'original';
 let examAnswers = {};
 let examScore = { correct: 0, total: 0 };
 let fcCards = [], fcIndex = 0, fcFlipped = false;
@@ -529,10 +530,29 @@ function showSection(sec) {
 // ════════════════════════════════════════
 function renderTerms() {
   if (!currentTopic) return;
+  termsSort = 'original';
+  document.getElementById('sort-original').classList.add('active');
+  document.getElementById('sort-az').classList.remove('active');
   buildAlphaBar();
+  document.getElementById('alpha-bar').style.display = 'none';
+  document.getElementById('term-search').value = '';
   renderTermList(currentTopic.terms, '');
   document.getElementById('terms-count').textContent = currentTopic.terms.length + ' terms';
+}
+
+function setTermsSort(sort) {
+  termsSort = sort;
+  document.getElementById('sort-original').classList.toggle('active', sort === 'original');
+  document.getElementById('sort-az').classList.toggle('active', sort === 'az');
+  const bar = document.getElementById('alpha-bar');
+  bar.style.display = sort === 'az' ? '' : 'none';
+  if (sort === 'az') {
+    document.querySelectorAll('.alpha-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('.alpha-btn')?.classList.add('active');
+  }
   document.getElementById('term-search').value = '';
+  renderTermList(currentTopic.terms, '');
+  document.getElementById('terms-count').textContent = currentTopic.terms.length + ' terms';
 }
 
 function buildAlphaBar() {
@@ -578,7 +598,11 @@ function renderTermList(terms, groupLetter) {
     list.innerHTML = '<div style="color:var(--muted);grid-column:1/-1;padding:20px">No terms found.</div>';
     return;
   }
-  if (!groupLetter) {
+  if (groupLetter) {
+    terms.forEach(t => list.appendChild(makeDictCard(t)));
+    return;
+  }
+  if (termsSort === 'az') {
     const groups = {};
     terms.forEach(t => {
       const l = t.term[0].toUpperCase();

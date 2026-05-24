@@ -61,8 +61,14 @@
             <p id="terms-count"></p>
           </div>
         </div>
-        <input class="search-box" type="text" placeholder="Search terms..." oninput="filterTerms(this.value)" id="term-search">
-        <div class="terms-alpha-bar" id="alpha-bar"></div>
+        <div class="terms-controls">
+          <input class="search-box" type="text" placeholder="Search terms..." oninput="filterTerms(this.value)" id="term-search">
+          <div class="terms-sort-row">
+            <button class="sort-btn active" id="sort-original" onclick="setTermsSort('original')">Original Order</button>
+            <button class="sort-btn" id="sort-az" onclick="setTermsSort('az')">A – Z</button>
+          </div>
+        </div>
+        <div class="terms-alpha-bar" id="alpha-bar" style="display:none"></div>
         <div class="terms-dict" id="terms-list"></div>
       </div>
 
