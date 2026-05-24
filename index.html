@@ -18,6 +18,12 @@
   </nav>
 </header>
 
+<div class="mobile-topic-bar">
+  <select class="mobile-topic-sel" id="mobile-topic-sel" onchange="mobilePick(this.value)">
+    <option value="">— Select a topic —</option>
+  </select>
+</div>
+
 <div class="app">
 
   <!-- SIDEBAR -->
@@ -42,6 +48,7 @@
     <div id="view-study" class="hidden">
       <div class="section-tabs" id="section-tabs">
         <button class="sec-tab active" onclick="showSection('terms')">📖 Terms & Definitions</button>
+        <button class="sec-tab" onclick="showSection('slides')">🖼️ Slides</button>
         <button class="sec-tab" onclick="showSection('steps')">🔢 Step-by-Step</button>
         <button class="sec-tab" onclick="showSection('exam')">📝 Practice Exam</button>
       </div>
@@ -55,7 +62,16 @@
           </div>
         </div>
         <input class="search-box" type="text" placeholder="Search terms..." oninput="filterTerms(this.value)" id="term-search">
-        <div class="terms-grid" id="terms-list"></div>
+        <div class="terms-alpha-bar" id="alpha-bar"></div>
+        <div class="terms-dict" id="terms-list"></div>
+      </div>
+
+      <!-- SLIDES -->
+      <div id="sec-slides" class="hidden">
+        <div class="section-head">
+          <div><h2>Slides</h2><p>Presentation slides for this topic</p></div>
+        </div>
+        <div id="slides-container"></div>
       </div>
 
       <!-- STEPS -->
@@ -142,7 +158,7 @@
           <button class="fc-btn" onclick="shuffleCards()">⇄ Shuffle</button>
           <button class="fc-btn" onclick="markCard('review')" style="color:var(--red);border-color:var(--red)">✕ Review again</button>
         </div>
-        <div id="fc-ai-card-display" style="margin-top:20px"></div>
+        <div id="fc-ai-badge" style="margin-top:20px;text-align:center"></div>
       </div>
     </div>
 

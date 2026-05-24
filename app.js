@@ -428,6 +428,7 @@ function init() {
   buildSidebar();
   buildHomeGrid();
   buildFCSelect();
+  buildMobileTopicSelect();
   selectTopic('concurrent');
 }
 
@@ -468,6 +469,22 @@ function buildFCSelect() {
     o.textContent = t.icon + ' ' + t.name;
     sel.appendChild(o);
   });
+}
+
+function buildMobileTopicSelect() {
+  const sel = document.getElementById('mobile-topic-sel');
+  TOPICS.forEach(t => {
+    const o = document.createElement('option');
+    o.value = t.id;
+    o.textContent = t.icon + ' ' + t.name;
+    sel.appendChild(o);
+  });
+}
+
+function mobilePick(id) {
+  if (!id) return;
+  selectTopic(id);
+  showView('study');
 }
 
 // ════════════════════════════════════════

@@ -179,11 +179,20 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 .section-head p { color: var(--muted); font-size: 14px; }
 .hidden { display: none !important; }
 
+/* MOBILE TOPIC BAR */
+.mobile-topic-bar { display: none; background: var(--surface); border-bottom: 1px solid var(--border); padding: 10px 16px; position: sticky; top: 64px; z-index: 90; }
+.mobile-topic-sel { width: 100%; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; cursor: pointer; }
+
 @media (max-width: 768px) {
+  .mobile-topic-bar { display: flex; }
   .sidebar { display: none; }
   .main { padding: 20px 16px; }
   .hero h1 { font-size: 26px; }
   .flashcard-scene { height: 220px; }
   .terms-dict { grid-template-columns: 1fr; }
   .slide-cols { grid-template-columns: 1fr; }
+  .section-tabs { gap: 2px; }
+  .sec-tab { font-size: 12px; padding: 8px 6px; }
+  .flashcard-controls { flex-direction: column; }
+  .exam-type-tabs { flex-wrap: wrap; }
 }
