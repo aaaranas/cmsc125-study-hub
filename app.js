@@ -431,6 +431,50 @@ const TOPICS = [
 ]; // end TOPICS
 
 // ════════════════════════════════════════
+// FINAL EXAM DATA
+// ════════════════════════════════════════
+const FINAL_EXAM = {
+  tf: [
+    { topic: 'Concurrent Programming', tc: '#6366f1', q: 'A binary semaphore can have values greater than 1.', a: false, exp: 'A binary semaphore only has values 0 (in use) and 1 (free). Values greater than 1 are only possible with counting semaphores.' },
+    { topic: 'Memory Management', tc: '#10b981', q: 'Thrashing occurs when a process has too many frames allocated to it.', a: false, exp: 'Thrashing occurs when a process has too FEW frames — the OS spends more time swapping pages than executing instructions.' },
+    { topic: 'Memory Management', tc: '#10b981', q: 'FIFO is the only common page replacement algorithm susceptible to Belady\'s Anomaly.', a: true, exp: 'Only FIFO exhibits Belady\'s Anomaly — adding more frames can paradoxically increase page faults. LRU, OPT, and Clock do not suffer from it.' },
+    { topic: 'Memory Management', tc: '#10b981', q: 'The TLB is a software structure maintained by the OS kernel.', a: false, exp: 'The TLB (Translation Lookaside Buffer) is a hardware cache built into the CPU for fast virtual-to-physical address translation. The OS does not maintain it in software.' },
+    { topic: 'File & Disk Management', tc: '#f59e0b', q: 'SSTF disk scheduling guarantees that no disk request will ever starve.', a: false, exp: 'SSTF always services the nearest request, so distant requests can starve indefinitely if nearby requests keep arriving. SCAN/C-SCAN prevent starvation.' },
+    { topic: 'Memory Management', tc: '#10b981', q: 'The Working Set Model prevents thrashing by allocating exactly WSS frames to each process.', a: true, exp: 'WSS = unique pages referenced within window Δ. Allocating exactly that many frames keeps all active pages in memory, eliminating constant page faults.' },
+    { topic: 'Distributed Systems', tc: '#8b5cf6', q: 'A Distributed OS requires users to explicitly log in via SSH or use FTP to access remote resources.', a: false, exp: 'That describes a Network OS. A Distributed OS makes remote resources accessible identically to local ones — the distribution is fully transparent to the user.' },
+    { topic: 'Embedded Systems', tc: '#ef4444', q: 'Rate Monotonic Scheduling assigns the highest priority to the task with the shortest period.', a: true, exp: 'RMS rule: shorter period = higher rate = higher priority. A task with a 5ms period gets higher priority than one with a 50ms period.' },
+    { topic: 'Distributed Systems', tc: '#8b5cf6', q: 'TCP uses a two-way handshake for connection establishment.', a: false, exp: 'TCP uses a THREE-way handshake: SYN → SYN-ACK → ACK. Two messages are not sufficient to establish a reliable bidirectional connection.' },
+    { topic: 'File & Disk Management', tc: '#f59e0b', q: 'Indexed file allocation causes external fragmentation.', a: false, exp: 'Indexed allocation stores data blocks anywhere on disk — no consecutive placement needed — so no external fragmentation. Contiguous allocation causes external fragmentation.' }
+  ],
+  id: [
+    { topic: 'Memory Management', tc: '#10b981', q: 'The OS condition where it spends more time swapping pages than executing process instructions.', a: 'Thrashing' },
+    { topic: 'Concurrent Programming', tc: '#6366f1', q: 'The semaphore operation that decrements the counter and blocks the calling process if the counter reaches zero.', a: 'wait()' },
+    { topic: 'File & Disk Management', tc: '#f59e0b', q: 'The disk scheduling algorithm that services the request closest to the current head position, minimizing individual seek time.', a: 'SSTF (Shortest Seek Time First)' },
+    { topic: 'Embedded Systems', tc: '#ef4444', q: 'The real-time constraint where missing a deadline constitutes the failure itself and can cause physical harm.', a: 'Hard Real-Time' },
+    { topic: 'Memory Management', tc: '#10b981', q: 'The hardware cache that stores recent virtual-to-physical address mappings to speed up memory translation.', a: 'TLB (Translation Lookaside Buffer)' },
+    { topic: 'File & Disk Management', tc: '#f59e0b', q: 'The file allocation method that uses a dedicated index block holding all data block pointers, supporting fast random access without external fragmentation.', a: 'Indexed Allocation' },
+    { topic: 'Distributed Systems', tc: '#8b5cf6', q: 'The transport protocol providing reliable, connection-oriented, in-order byte-stream delivery via sequence numbers and acknowledgments.', a: 'TCP (Transmission Control Protocol)' },
+    { topic: 'Distributed Systems', tc: '#8b5cf6', q: 'The property of a distributed system where it appears as a single centralized system to all users.', a: 'Transparency' },
+    { topic: 'Embedded Systems', tc: '#ef4444', q: 'The RTOS scheduling algorithm that assigns the highest fixed priority to the task with the shortest period.', a: 'Rate Monotonic Scheduling (RMS)' },
+    { topic: 'Concurrent Programming', tc: '#6366f1', q: 'A state where two or more processes are permanently blocked, each waiting for a resource held by another process in the set.', a: 'Deadlock' }
+  ],
+  essay: [
+    { topic: 'Concurrent Programming', tc: '#6366f1', q: 'What is the difference between a binary semaphore and a counting semaphore? Give a real-world use case for each.', a: 'A binary semaphore holds only values 0 or 1 and is used for mutual exclusion — ensuring only one process enters a critical section at a time. For example, controlling access to a single printer ensures only one job prints at once: a process calls wait() to acquire the printer (S becomes 0) and signal() to release it (S returns to 1). A counting semaphore can hold any non-negative integer value and is used when multiple instances of a resource are available. For example, if a database server has five connection slots, the semaphore is initialized to 5; each process decrements it on connection and increments it on release, blocking new requests once the count reaches 0 until an existing connection is freed.' },
+    { topic: 'Concurrent Programming', tc: '#6366f1', q: 'What are the four necessary conditions for deadlock? Explain one strategy to prevent it.', a: 'Deadlock requires all four conditions simultaneously: (1) Mutual Exclusion — a resource can only be held by one process at a time; (2) Hold-and-Wait — a process holds at least one resource while waiting for additional ones; (3) No Preemption — resources cannot be forcibly taken from a process holding them; (4) Circular Wait — a cycle exists where each process waits for a resource held by the next in the cycle. One effective prevention strategy is to eliminate circular wait by imposing a strict global ordering on all resources and requiring every process to request resources only in ascending order of that numbering, making it impossible for a circular dependency to form — no process can hold resource N while waiting for resource M if M < N.' },
+    { topic: 'Memory Management', tc: '#10b981', q: 'Compare demand paging and prepaging as memory fetch strategies. What principle of locality makes prepaging effective?', a: 'Demand paging is a reactive fetch strategy that loads a page into RAM only when the process accesses it and triggers a page fault, making it memory-efficient because only genuinely needed pages ever enter RAM, but resulting in frequent faults especially at startup. Prepaging is a predictive strategy that loads multiple pages before they are referenced, reducing page faults during execution. Prepaging is effective because of the principle of spatial locality — programs tend to access memory near recently used addresses, such as reading sequential array elements, so loading adjacent pages just ahead of an actual fault is statistically almost always correct and avoids repeated fault handling overhead.' },
+    { topic: 'Embedded Systems', tc: '#ef4444', q: 'What is the difference between Hard Real-Time and Soft Real-Time systems? Give two examples of each and explain the consequences of missing a deadline.', a: 'A hard real-time system is one where missing a deadline constitutes the failure itself — for example, an ABS braking system must respond within 20ms or wheels lock causing loss of steering control, and a pacemaker\'s pulse timing literally equals a heartbeat so a missed pulse is life-threatening. A soft real-time system is one where deadlines are targets rather than absolute constraints — for example, a video stream delivering a late frame produces a stutter but continues functioning, and an online game with a delayed update creates lag but causes no physical harm. The critical distinction is that hard real-time correctness is defined by both output and timing simultaneously, while soft real-time timing affects only quality of experience.' },
+    { topic: 'File & Disk Management', tc: '#f59e0b', q: 'Compare SSTF and SCAN disk scheduling in terms of performance and fairness. Under what condition does starvation occur with SSTF?', a: 'SSTF services whichever pending request is closest to the current head position, minimizing individual seek movements and achieving low average seek time, but it is unfair because requests far from the head are continuously bypassed whenever closer requests keep arriving — this is called starvation. SCAN moves the head in one direction servicing all requests it encounters, then reverses at the disk boundary, providing a balance between performance and fairness since every request is guaranteed service within at most two full head sweeps, preventing indefinite starvation. Starvation with SSTF occurs when a continuous stream of new requests arrives near the head\'s current zone — since SSTF always picks the nearest, it services those arrivals first and may never reach distant requests if the near-track load never abates.' }
+  ],
+  ps: [
+    { topic: 'Concurrent Programming', tc: '#6366f1', q: 'Semaphore S is initialized to 1. Process P1 executes wait(S), then Process P2 executes wait(S). What is the value of S after both operations? What is the state of P2?', a: 'S = 0; P2 is blocked in the waiting queue.', steps: ['S starts at 1 (resource free)', 'P1 executes wait(S): S > 0, so S decrements to 0. P1 enters the critical section.', 'P2 executes wait(S): S = 0 (not > 0), so P2 is BLOCKED and placed in the semaphore\'s waiting queue.', 'Final state: S = 0, P1 is inside the critical section, P2 is suspended.', 'P2 unblocks only when P1 executes signal(S) — S increments to 1 and P2 is woken up.'] },
+    { topic: 'Memory Management', tc: '#10b981', q: 'Reference string: 1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5. With 3 frames using FIFO replacement, how many page faults occur?', a: '9 page faults', steps: ['1 → [1] FAULT (1)', '2 → [1,2] FAULT (2)', '3 → [1,2,3] FAULT (3)', '4 → [2,3,4] FAULT — evict 1 (4)', '1 → [3,4,1] FAULT — evict 2 (5)', '2 → [4,1,2] FAULT — evict 3 (6)', '5 → [1,2,5] FAULT — evict 4 (7)', '1 → HIT', '2 → HIT', '3 → [2,5,3] FAULT — evict 1 (8)', '4 → [5,3,4] FAULT — evict 2 (9)', '5 → HIT', 'TOTAL: 9 page faults out of 12 references'] },
+    { topic: 'Memory Management', tc: '#10b981', q: 'Memory holes (MB): 10, 4, 20, 18, 7, 9, 12, 15. A process needs 12 MB. Which hole is selected by (a) First-Fit and (b) Best-Fit? How much space remains in each case?', a: '(a) First-Fit: 20 MB hole — 8 MB leftover   (b) Best-Fit: 12 MB hole — 0 MB leftover', steps: ['Request size: 12 MB', 'Eligible holes (≥ 12 MB): 20 MB (hole 3), 18 MB (hole 4), 12 MB (hole 7), 15 MB (hole 8)', 'First-Fit: scan from start → 10(no), 4(no), 20(yes) → SELECT 20 MB | Leftover: 20 − 12 = 8 MB', 'Best-Fit: smallest sufficient → 12 MB (exact fit) → SELECT 12 MB | Leftover: 12 − 12 = 0 MB', 'Best-Fit produces no wasted fragment; First-Fit leaves an 8 MB fragment'] },
+    { topic: 'Embedded Systems', tc: '#ef4444', q: 'An RTOS has: Task A (period = 5 ms), Task B (period = 15 ms), Task C (period = 30 ms). Using Rate Monotonic Scheduling, assign priorities. If all three become ready simultaneously, which executes first? Last?', a: 'A = Priority 1 (highest), B = Priority 2, C = Priority 3 (lowest). A executes first; C executes last.', steps: ['RMS Rule: shorter period = higher rate = higher priority', 'Task A: 5 ms → PRIORITY 1 (highest — must meet deadline every 5 ms)', 'Task B: 15 ms → PRIORITY 2', 'Task C: 30 ms → PRIORITY 3 (lowest — has the most slack time)', 'All three ready simultaneously → Task A preempts and runs first', 'A completes → Task B runs next', 'B completes → Task C runs last', 'If A\'s next period fires before C finishes, A preempts C again'] },
+    { topic: 'File & Disk Management', tc: '#f59e0b', q: 'Disk head is at position 50. Request queue (order of arrival): 95, 180, 34, 119, 11, 123, 62, 64. Calculate total head movement using FCFS scheduling.', a: 'Total = 644 cylinders', steps: ['50 → 95 : |95 − 50| = 45', '95 → 180 : |180 − 95| = 85', '180 → 34 : |34 − 180| = 146', '34 → 119 : |119 − 34| = 85', '119 → 11 : |11 − 119| = 108', '11 → 123 : |123 − 11| = 112', '123 → 62 : |62 − 123| = 61', '62 → 64 : |64 − 62| = 2', 'Total = 45 + 85 + 146 + 85 + 108 + 112 + 61 + 2 = 644 cylinders'] }
+  ]
+};
+
+// ════════════════════════════════════════
 // STATE
 // ════════════════════════════════════════
 let currentTopic = null;
@@ -440,6 +484,7 @@ let termsSort = 'original';
 let examAnswers = {};
 let examScore = { correct: 0, total: 0 };
 let fcCards = [], fcIndex = 0, fcFlipped = false;
+let feAnswers = {}, feScore = { correct: 0, total: 0 };
 
 // ════════════════════════════════════════
 // INIT
@@ -449,6 +494,7 @@ function init() {
   buildHomeGrid();
   buildFCSelect();
   buildMobileTopicSelect();
+  renderFinalExam();
   selectTopic('concurrent');
 }
 
@@ -511,11 +557,11 @@ function mobilePick(id) {
 // VIEWS
 // ════════════════════════════════════════
 function showView(view) {
-  ['home', 'study', 'flashcards'].forEach(v =>
+  ['home', 'study', 'flashcards', 'finalexam'].forEach(v =>
     document.getElementById('view-' + v).classList.toggle('hidden', v !== view)
   );
   document.querySelectorAll('.nav-btn').forEach((b, i) =>
-    b.classList.toggle('active', ['home', 'study', 'flashcards'][i] === view)
+    b.classList.toggle('active', ['home', 'study', 'flashcards', 'finalexam'][i] === view)
   );
 }
 
@@ -915,6 +961,127 @@ function updateScore() {
 function resetExam() {
   examAnswers = {}; examScore = { correct: 0, total: 0 }; updateScore();
   if (currentTopic) renderExam();
+}
+
+// ════════════════════════════════════════
+// FINAL EXAM
+// ════════════════════════════════════════
+function tBadge(topic, tc) {
+  return `<span class="q-topic-badge" style="background:${tc}22;color:${tc};border:1px solid ${tc}44">${topic}</span>`;
+}
+
+function renderFinalExam() {
+  // T/F
+  document.getElementById('fe-tf').innerHTML = FINAL_EXAM.tf.map((q, i) => `
+    <div class="q-card" id="fe-tf-card-${i}">
+      <div class="q-num">TRUE / FALSE &middot; Q${i + 1} ${tBadge(q.topic, q.tc)}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="tf-options">
+        <button class="tf-btn" onclick="answerFETF(${i},true,${q.a})">TRUE</button>
+        <button class="tf-btn" onclick="answerFETF(${i},false,${q.a})">FALSE</button>
+      </div>
+      <div class="q-answer" id="fe-tf-exp-${i}"><strong>${q.a ? '✓ TRUE' : '✗ FALSE'}</strong> — ${q.exp}</div>
+    </div>`).join('');
+
+  // ID
+  document.getElementById('fe-id').innerHTML = FINAL_EXAM.id.map((q, i) => `
+    <div class="q-card">
+      <div class="q-num">IDENTIFICATION &middot; Q${i + 1} ${tBadge(q.topic, q.tc)}</div>
+      <div class="q-text">${q.q}</div>
+      <input class="id-input" id="fe-id-inp-${i}" placeholder="Type your answer…"
+        onkeydown="if(event.key==='Enter') checkFEID(${i},'${q.a.replace(/'/g, "\\'")}')">
+      <div style="display:flex;gap:8px">
+        <button class="check-btn" onclick="checkFEID(${i},'${q.a.replace(/'/g, "\\'")}')">Check</button>
+        <button class="reveal-btn" onclick="revealFEID(${i})">Reveal</button>
+      </div>
+      <div class="q-answer" id="fe-id-ans-${i}"><strong>Answer:</strong> ${q.a}</div>
+    </div>`).join('');
+
+  // Essay
+  document.getElementById('fe-essay').innerHTML = FINAL_EXAM.essay.map((q, i) => `
+    <div class="q-card">
+      <div class="q-num">ESSAY &middot; Q${i + 1} ${tBadge(q.topic, q.tc)}</div>
+      <div class="q-text">${q.q}</div>
+      <button class="reveal-btn" onclick="revealFEEssay(${i})">Show Sample Answer</button>
+      <div class="q-answer essay-answer" id="fe-essay-ans-${i}">
+        <span class="essay-label">SAMPLE ANSWER</span>${q.a}
+      </div>
+    </div>`).join('');
+
+  // PS
+  document.getElementById('fe-ps').innerHTML = FINAL_EXAM.ps.map((q, i) => `
+    <div class="q-card">
+      <div class="q-num">PROBLEM SOLVING &middot; Q${i + 1} ${tBadge(q.topic, q.tc)}</div>
+      <div class="q-text">${q.q}</div>
+      <button class="reveal-btn" onclick="revealFEPS(${i})">Show Solution</button>
+      <div class="q-answer" id="fe-ps-ans-${i}">
+        <strong>Answer:</strong> ${q.a}
+        <ul class="ps-steps" style="margin-top:10px">
+          ${q.steps.map((s, j) => `<li><span class="step-n">${j + 1}</span>${s}</li>`).join('')}
+        </ul>
+      </div>
+    </div>`).join('');
+
+  showFEType('tf');
+}
+
+function showFEType(type) {
+  ['tf', 'id', 'essay', 'ps'].forEach(t =>
+    document.getElementById('fe-' + t).classList.toggle('hidden', t !== type)
+  );
+  document.querySelectorAll('.fe-tab').forEach((b, i) =>
+    b.classList.toggle('active', ['tf', 'id', 'essay', 'ps'][i] === type)
+  );
+}
+
+function answerFETF(i, given, correct) {
+  if (feAnswers['tf-' + i] !== undefined) return;
+  feAnswers['tf-' + i] = given;
+  const isRight = given === correct;
+  if (isRight) feScore.correct++;
+  feScore.total++;
+  const card = document.getElementById('fe-tf-card-' + i);
+  card.querySelectorAll('.tf-btn').forEach(b => {
+    const v = b.textContent === 'TRUE';
+    if (v === correct) b.classList.add('correct');
+    else if (v === given && !isRight) b.classList.add('wrong');
+    b.disabled = true;
+  });
+  document.getElementById('fe-tf-exp-' + i).classList.add('show');
+  updateFEScore();
+}
+
+function checkFEID(i, correct) {
+  const inp = document.getElementById('fe-id-inp-' + i);
+  const given = inp.value.trim().toLowerCase();
+  const ans = correct.toLowerCase();
+  const isRight = given.length > 2 && (given === ans || ans.includes(given) || given.includes(ans.split('(')[0].trim()));
+  if (feAnswers['id-' + i] === undefined) {
+    feAnswers['id-' + i] = given;
+    if (isRight) feScore.correct++;
+    feScore.total++;
+    updateFEScore();
+  }
+  inp.style.borderColor = isRight ? 'var(--green)' : 'var(--red)';
+  inp.style.color = isRight ? 'var(--green)' : 'var(--red)';
+  document.getElementById('fe-id-ans-' + i).classList.add('show');
+}
+
+function revealFEID(i) {
+  if (feAnswers['id-' + i] === undefined) { feAnswers['id-' + i] = ''; feScore.total++; updateFEScore(); }
+  document.getElementById('fe-id-ans-' + i).classList.add('show');
+}
+
+function revealFEEssay(i) { document.getElementById('fe-essay-ans-' + i).classList.add('show'); }
+function revealFEPS(i) { document.getElementById('fe-ps-ans-' + i).classList.add('show'); }
+
+function updateFEScore() {
+  document.getElementById('fe-score-display').textContent = `${feScore.correct} / ${feScore.total}`;
+}
+
+function resetFinalExam() {
+  feAnswers = {}; feScore = { correct: 0, total: 0 }; updateFEScore();
+  renderFinalExam();
 }
 
 // ════════════════════════════════════════

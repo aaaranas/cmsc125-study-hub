@@ -15,6 +15,7 @@
     <button class="nav-btn active" onclick="showView('home')">Home</button>
     <button class="nav-btn" onclick="showView('study')">Study</button>
     <button class="nav-btn" onclick="showView('flashcards')">Flashcards</button>
+    <button class="nav-btn" onclick="showView('finalexam')">Final Exam</button>
   </nav>
 </header>
 
@@ -166,6 +167,33 @@
         </div>
         <div id="fc-ai-badge" style="margin-top:20px;text-align:center"></div>
       </div>
+    </div>
+
+    <!-- FINAL EXAM VIEW -->
+    <div id="view-finalexam" class="hidden">
+      <div class="section-head">
+        <div>
+          <h2>Final Exam</h2>
+          <p>All 5 Topics · 10 T/F · 10 ID · 5 Essay · 5 Problem Solving</p>
+        </div>
+      </div>
+      <div class="score-bar">
+        <div>
+          <div class="score-label">SCORE</div>
+          <div class="score-val" id="fe-score-display">0 / 0</div>
+        </div>
+        <button class="reset-btn" onclick="resetFinalExam()">↺ Reset</button>
+      </div>
+      <div class="exam-type-tabs">
+        <button class="exam-tab fe-tab active" onclick="showFEType('tf')">True / False</button>
+        <button class="exam-tab fe-tab" onclick="showFEType('id')">Identification</button>
+        <button class="exam-tab fe-tab" onclick="showFEType('essay')">Essay</button>
+        <button class="exam-tab fe-tab" onclick="showFEType('ps')">Problem Solving</button>
+      </div>
+      <div id="fe-tf"></div>
+      <div id="fe-id" class="hidden"></div>
+      <div id="fe-essay" class="hidden"></div>
+      <div id="fe-ps" class="hidden"></div>
     </div>
 
   </main>
